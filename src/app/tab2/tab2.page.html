@@ -1,0 +1,48 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title> Mi carrito </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <!-- <ion-grid *ngIf="cart">
+    <ion-row>
+      <ion-col size="6" *ngFor="let item of cart.items; index as i">
+        <ion-card>
+          <img [src]="item.product.photo+i" />
+          <ion-card-header>
+            <ion-card-title>
+              {{item.product.name}}
+              <ion-badge 
+                >{{item.product.type}}</ion-badge
+              >
+            </ion-card-title>
+            <ion-card-subtitle>{{ item.product.price| currency }}</ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content> {{item.product.description}} </ion-card-content>
+          <ion-button expand="block">
+            <ion-icon name="cart-outline"></ion-icon>
+          </ion-button>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid> -->
+  <ion-list>
+    <ion-item *ngFor="let item of cart.items">
+      <ion-thumbnail slot="start">
+        <img [src]="item.product.photo" alt="{{ item.product.name }}">
+      </ion-thumbnail>
+      <ion-label>
+        <h2>{{ item.product.name }}</h2>
+        <p>{{ item.product.description }}</p>
+        <p>Precio: ${{ item.product.price }}</p>
+        <p>Cantidad: {{ item.quantity }}</p>
+      </ion-label>
+      <ion-button (click)="promptRemoveItem(item)">Eliminar</ion-button>
+    </ion-item>
+  </ion-list>
+  <ion-item>
+    <ion-label>Total:</ion-label>
+    <ion-note slot="end" class="total-amount">{{ cart.total | currency:'MXN':'symbol':'1.2-2' }}</ion-note>
+  </ion-item>
+</ion-content>
