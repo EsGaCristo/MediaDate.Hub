@@ -1,40 +1,13 @@
+/* Agrega estilos personalizados para el ion-item de la fecha */
+.custom-date-item {
+  --min-width: 200;
+  --min-height: 50;
+  --padding-start: 0;
+}
+
+/* Ajusta el tamaño del botón según sea necesario */
+ion-button {
+  max-width: 1080 px; /* Ajusta según tus necesidades */
+  margin: 0 auto; /* Centra el botón en el contenedor */
+}
 /* cart.page.scss */
-
-ion-list {
-    ion-item {
-      ion-thumbnail {
-        max-width: 60px;
-        max-height: 60px;
-      }
-      ion-label {
-        h2 {
-          font-size: 1.2rem;
-          margin: 0;
-        }
-        p {
-          font-size: 0.9rem;
-          color: #777;
-          margin: 0;
-        }
-      }
-    }
-  
-    ion-item:last-child {
-      border-bottom: none;
-    }
-  }
-  
-  ion-item:last-child {
-    ion-label {
-      ion-note {
-        font-weight: bold;
-      }
-    }
-  }
-
-  .total-amount {
-    font-weight: bold;
-    font-size: 20px;
-    color: #007bff;
-  }
-  
