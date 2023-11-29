@@ -11,7 +11,15 @@ const routes: Routes = [
   {
     path: 'login',
     loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
+  },  {
+    path: 'menu',
+    loadChildren: () => import('./menu/menu.module').then( m => m.MenuPageModule)
+  },
+  {
+    path: 'agregar-cita',
+    loadChildren: () => import('./agregar-cita/agregar-cita.module').then( m => m.AgregarCitaPageModule)
   }
+
 ];
 @NgModule({
   imports: [
