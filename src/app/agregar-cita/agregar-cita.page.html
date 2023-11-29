@@ -5,9 +5,66 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">agregar-cita</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  <ion-card>
+    <ion-card-content>
+      <form >
+        <ion-list lines="full">
+
+          <ion-item>
+            <ion-input type="text" placeholder="Titulo de la cita"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Nombre</ion-label>
+            <ion-select [(ngModel)] = "opcion" multiple="false" placeholder="Seleccion paciente">
+              <ion-select-option *ngFor="let paciente of pacientes" [value]="paciente.nombre">{{ paciente.nombre }}</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Estatus</ion-label>
+            <ion-select [(ngModel)] = "opcion" multiple="false" placeholder="Seleccion de estatus">
+              <ion-select-option *ngFor="let est of estatus" [value]="est.nombre">{{ est.nombre }}</ion-select-option>
+            </ion-select>
+          </ion-item>
+          
+          <ion-item>
+            <ion-label>Fecha</ion-label>
+            <ion-datetime-button datetime="datetime"></ion-datetime-button>
+
+            <ion-modal [keepContentsMounted]="true">
+              <ng-template>
+                <ion-datetime id="datetime" presentation="date" [showDefaultButtons]="true"></ion-datetime>
+              </ng-template>
+            </ion-modal>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Hora</ion-label>
+            <ion-datetime-button datetime="hora"></ion-datetime-button>
+
+            <ion-modal [keepContentsMounted]="true">
+              <ng-template>
+                <ion-datetime id="hora" presentation="time" [showDefaultButtons]="true"></ion-datetime>
+              </ng-template>
+            </ion-modal>
+          </ion-item>
+
+          <ion-item>
+            <ion-input type="area" placeholder="Descripcion de la cita"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-button expand="block">
+              Guardar
+            </ion-button>
+          </ion-item>
+
+
+        </ion-list>
+      </form>    
+     
+    </ion-card-content>
+  </ion-card>
+  
 </ion-content>
