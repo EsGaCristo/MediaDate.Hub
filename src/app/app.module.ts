@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 
 import { environment } from 'src/environments/environment';
 import { AngularFireModule } from '@angular/fire/compat';
+import {AngularFireDatabaseModule} from '@angular/fire/compat/database';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 @NgModule({
   declarations: [AppComponent],
@@ -17,9 +18,10 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
     IonicModule.forRoot(),
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFireModule,
+    AngularFireDatabaseModule,
   ],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    AngularFirestore],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
