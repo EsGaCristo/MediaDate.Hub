@@ -1,7 +1,7 @@
 export interface Paciente {
-    id? : number;
+    id: string;
     name: string;
-    edad: number;
-    suffering: string;
-    date : Date;
+    age : number;
+    suffering?: string;
+    date: Date;
 }
