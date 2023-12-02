@@ -29,7 +29,7 @@ export class Tab2Page {
     description:[''],
     alergias:[''],
     fecha:['',Validators.required],
-    historialMedico:['']
+    historialMedico:[[]]
       });
 
     }
