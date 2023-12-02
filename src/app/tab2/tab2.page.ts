@@ -16,17 +16,20 @@ export class Tab2Page {
   showPicker=false;
   dateValue = format(new Date(),'yyyy-MM-dd')+'T09:00:00.000Z';
   formattedString = '';
+
   constructor(private formBuilder:FormBuilder, private pacienteService: PacienteService,
     private toastController: ToastController) {
 
     this.setToday();
-
+    //inicializar el formulario
     this.productForm=this.formBuilder.group({
     name:['',Validators.required],
     age:[null,Validators.required],
-    suffering:[''],
+    cel:[null,Validators.required],
+    description:[''],
+    alergias:[''],
     fecha:['',Validators.required],
-    
+    historialMedico:['']
       });
 
     }
