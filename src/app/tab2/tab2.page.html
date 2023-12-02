@@ -14,7 +14,7 @@
 
   <ion-card>
     <ion-card-content>
-      <form [formGroup]="productForm">
+      <form [formGroup]="productForm" (ngSubmit)="savePatient()">
         <ion-list lines="full">
           <ion-item>
             <ion-label position="floating">Nombre</ion-label>
@@ -48,22 +48,18 @@
           (ionChange)="dateChanged(datetime.value)"
           showDefaultButtons="true"
           (ionCancel)="showPicker=false;"
+          formControlName="fecha"
           >
 
           </ion-datetime>
-
-          <ion-item>
-            <ion-button expand="block">
-              <ion-icon name="medkit-outline"></ion-icon>
+        </ion-list>
+        <ion-item>    
+          <ion-button expand="block" type="submit" [disabled]="!productForm.valid">
+            <ion-icon name="medkit-outline"></ion-icon>
               Guardar
             </ion-button>
           </ion-item>
-
-        </ion-list>
       </form>
-          
-       <!--<ion-button expand="block" type="submit" [disabled]="!productForm.valid">Guardar</ion-button>--> 
-      
     
      
     </ion-card-content>
