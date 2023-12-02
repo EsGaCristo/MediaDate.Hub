@@ -1,7 +1,12 @@
+import { historialMedico } from './historial.model';
+
 export interface Paciente {
-    id? : number;
+    id: string;
     name: string;
-    edad: number;
-    suffering: string;
-    date : Date;
+    age : number;
+    cel: number;
+    description:string;
+    date: Date;
+    alergias:string;
+    historialMedico:historialMedico[];
 }

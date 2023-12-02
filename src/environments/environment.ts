@@ -10,12 +10,12 @@ import { initializeApp } from 'firebase/app';
 export const environment = {
   production: false,
   firebaseConfig : {
-    apiKey: "AIzaSyCVb_FX31Cu9unKujZyXH6lgjRFcjLel7E",
-    authDomain: "medidatehub-ed249.firebaseapp.com",
-    projectId: "medidatehub-ed249",
-    storageBucket: "medidatehub-ed249.appspot.com",
-    messagingSenderId: "782597452862",
-    appId: "1:782597452862:web:a8484de87ebcf7c3b70d6f"
+    apiKey: "AIzaSyA41PNMRsZ-ks0puUUk_Om8GcTHLds5Ya4",
+    authDomain: "mediadatehub.firebaseapp.com",
+    projectId: "mediadatehub",
+    storageBucket: "mediadatehub.appspot.com",
+    messagingSenderId: "578985352008",
+    appId: "1:578985352008:web:f668867e421ee96ae5f17d"
   }
 };
 

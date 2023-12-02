@@ -11,12 +11,12 @@ import { Paciente } from '../models/paciente.model';
 })
 export class Tab1Page {
   public data: Paciente[] = [
-    { id: 1, name: 'John Doe', edad: 25, suffering: 'Dolor de Espalda', date: new Date('2023-11-06T09:00:00') },
-    { id: 2, name: 'Alice Smith', edad: 30, suffering: 'Dolor de Cabeza', date: new Date('2023-11-07T10:00:00') },
-    { id: 3, name: 'Carlos Pérez', edad: 40, suffering: 'Fiebre', date: new Date('2023-11-08T11:00:00') },
-    { id: 4, name: 'Ana Gómez', edad: 35, suffering: 'Problemas Estomacales', date: new Date('2023-11-09T12:00:00') },
-    { id: 5, name: 'Javier López', edad: 28, suffering: 'Migraña', date: new Date('2023-11-10T13:00:00') },
-    
+/*     { id: '1', name: 'John Doe', age: 25, suffering: 'Dolor de Espalda', date: new Date('2023-11-06T09:00:00') },
+    { id: '2', name: 'Alice Smith', age: 30, suffering: 'Dolor de Cabeza', date: new Date('2023-11-07T10:00:00') },
+    { id: '3', name: 'Carlos Pérez', age: 40, suffering: 'Fiebre', date: new Date('2023-11-08T11:00:00') },
+    { id: '4', name: 'Ana Gómez', age: 35, suffering: 'Problemas Estomacales', date: new Date('2023-11-09T12:00:00') },
+    { id: '5', name: 'Javier López', age: 28, suffering: 'Migraña', date: new Date('2023-11-10T13:00:00') },
+     */
   ];
 
   public results: Paciente[] = [...this.data];
@@ -29,7 +29,7 @@ export class Tab1Page {
 
       this.results = this.data.filter((paciente) =>
         paciente.name.toLowerCase().includes(query) ||
-        String(paciente.edad).includes(query) ||
+        String(paciente.age).includes(query) ||
         paciente.date.toISOString().includes(query)
       );
     } else {

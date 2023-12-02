@@ -14,24 +14,33 @@
 
   <ion-card>
     <ion-card-content>
-      <form [formGroup]="productForm">
+      <form [formGroup]="productForm" (ngSubmit)="savePatient()">
         <ion-list lines="full">
           <ion-item>
-            <ion-label position="floating">Nombre</ion-label>
+            <ion-label position="floating" style="font-size: 22px;">Nombre</ion-label>
             <ion-input placeholder="Ingresa el nombre del paciente" type="text" formControlName="name" outline></ion-input>
           </ion-item>
 
           <ion-item>
-            <ion-label position="floating">Edad</ion-label>
+            <ion-label position="floating" style="font-size: 22px;">Edad</ion-label>
             <ion-input placeholder="Ingresa la edad del paciente" type="number" formControlName="age" outline></ion-input>
           </ion-item>
 
           <ion-item>
-            <ion-label position="floating">Padecimiento</ion-label>
-            <ion-textarea placeholder="Ingresa el padecimiento" formControlName="suffering" outline></ion-textarea>
+            <ion-label position="floating" style="font-size: 22px;">Celular</ion-label>
+            <ion-input placeholder="Ingresa un num.Celular" type="number" formControlName="cel" outline></ion-input>
           </ion-item>
 
-          <ion-item (click)="showPicker=!showPicker">
+          <ion-item>
+            <ion-label position="floating" style="font-size: 22px;">Descripcion</ion-label>
+            <ion-textarea placeholder="Agrega un descripcion" type="text" formControlName="description"> </ion-textarea>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating" style="font-size: 22px;">Alergias</ion-label>
+            <ion-input placeholder="Ingresa las alergias del paciente" type="text" formControlName="alergias" outline></ion-input>
+          </ion-item>
+
+          <ion-item (click)="showPicker=!showPicker" style="font-size: 22px;">
               <ion-label>
                 Fecha de Ingreso
               </ion-label>
@@ -48,22 +57,17 @@
           (ionChange)="dateChanged(datetime.value)"
           showDefaultButtons="true"
           (ionCancel)="showPicker=false;"
+          formControlName="fecha"
           >
-
           </ion-datetime>
-
-          <ion-item>
-            <ion-button expand="block">
-              <ion-icon name="medkit-outline"></ion-icon>
+        </ion-list>
+        <ion-item>    
+          <ion-button expand="block" type="submit" [disabled]="!productForm.valid">
+            <ion-icon name="medkit-outline"></ion-icon>
               Guardar
             </ion-button>
           </ion-item>
-
-        </ion-list>
       </form>
-          
-       <!--<ion-button expand="block" type="submit" [disabled]="!productForm.valid">Guardar</ion-button>--> 
-      
     
      
     </ion-card-content>
