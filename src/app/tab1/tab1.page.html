@@ -24,7 +24,7 @@
   <ion-searchbar [debounce]="1000" (ionInput)="handleInput($event)"></ion-searchbar>
 
   <ion-list>
-    <ion-item [button]="true" detail="false" *ngFor="let result of results">
+    <ion-item (click)="viewPatient()" [button]="true" detail="false" *ngFor="let result of results">
       <div class="unread-indicator-wrapper" slot="start">
         <div class="unread-indicator"></div>
       </div>

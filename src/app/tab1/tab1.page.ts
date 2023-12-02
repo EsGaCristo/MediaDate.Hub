@@ -40,6 +40,11 @@ export class Tab1Page {
 
   constructor(private router: Router, private authService: AuthService) {}
 
+  public viewPatient():void{
+    localStorage.setItem('indexValue','sMbc9wYGY1TL1Ihnyt6jgit');
+    this.router.navigate(['/patient-view']);
+  }
+
   public logout() {
     this.authService.logout();
     this.router.navigate(['/login']);

@@ -9,8 +9,8 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" >
-  <full-calendar [options]="calendarOptions" ></full-calendar>
+<ion-content [fullscreen]="true">
+  <full-calendar [options]="calendarOptions"></full-calendar>
   <ion-modal #modal trigger="open-modal" (willDismiss)="onWillDismiss($event)">
     <ng-template>
       <ion-header>
@@ -25,16 +25,10 @@
         </ion-toolbar>
       </ion-header>
       <ion-content class="ion-padding">
-       <ion-label position="stacked">{{ message }}</ion-label>
-          
+        <ion-label position="stacked">{{ message }}</ion-label>
+
         <ion-item>
-          <ion-input
-            label="Enter your name"
-            labelPlacement="stacked"
-            type="text"
-            placeholder="Your name"
-           
-          ></ion-input>
+          <ion-input label="Enter your name" labelPlacement="stacked" type="text" placeholder="Your name"></ion-input>
         </ion-item>
       </ion-content>
     </ng-template>
@@ -49,22 +43,18 @@
           </ion-buttons>
           <ion-title>Agregar Cita</ion-title>
           <ion-buttons slot="end">
-            <ion-button type="submit" [disabled]="!addCitaForm.valid" (click)="confirm2()" [strong]="true">Confirmar</ion-button>
+            <ion-button type="submit" [disabled]="!addCitaForm.valid" (click)="confirm2()"
+              [strong]="true">Confirmar</ion-button>
           </ion-buttons>
         </ion-toolbar>
       </ion-header>
       <ion-content class="ion-padding">
-       <ion-label position="stacked">{{ message }}</ion-label>
-          
+        <ion-label position="stacked">{{ message }}</ion-label>
+
         <form [formGroup]="addCitaForm">
           <ion-item>
-            <ion-input
-              label="Info de la cita"
-              labelPlacement="stacked"
-              type="text"
-              placeholder="Your name"
-              formControlName="title"
-            ></ion-input>
+            <ion-input label="Info de la cita" labelPlacement="stacked" type="text" placeholder="Your name"
+              formControlName="title"></ion-input>
           </ion-item>
           <ion-item (click)="showPicker=!showPicker">
             <ion-label>
@@ -74,18 +64,13 @@
               {{formattedString}}
             </ion-text>
           </ion-item>
-        
 
 
-        <ion-datetime *ngIf="showPicker" 
-        #datetime
-        [value]="dateValue" size="cover"
-        (ionChange)="dateChanged(datetime.value)"
-        showDefaultButtons="true"
-        (ionCancel)="showPicker=false;"
-        >
 
-        </ion-datetime>
+          <ion-datetime *ngIf="showPicker" #datetime [value]="dateValue" size="cover"
+            (ionChange)="dateChanged(datetime.value)" showDefaultButtons="true" (ionCancel)="showPicker=false;">
+
+          </ion-datetime>
 
         </form>
       </ion-content>
