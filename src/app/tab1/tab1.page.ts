@@ -11,7 +11,17 @@ import { Paciente } from '../models/paciente.model';
 })
 export class Tab1Page {
   public data: Paciente[] = [
-/*     { id: '1', name: 'John Doe', age: 25, suffering: 'Dolor de Espalda', date: new Date('2023-11-06T09:00:00') },
+    {
+      id: '1',
+      name: 'John Doe',
+      age: 25,
+      cel: 3231123715,
+      description: '',
+      date: new Date('2023-11-06T09:00:00'),
+      alergias: '',
+      historialMedico: [],
+    },
+    /*
     { id: '2', name: 'Alice Smith', age: 30, suffering: 'Dolor de Cabeza', date: new Date('2023-11-07T10:00:00') },
     { id: '3', name: 'Carlos Pérez', age: 40, suffering: 'Fiebre', date: new Date('2023-11-08T11:00:00') },
     { id: '4', name: 'Ana Gómez', age: 35, suffering: 'Problemas Estomacales', date: new Date('2023-11-09T12:00:00') },
@@ -27,10 +37,11 @@ export class Tab1Page {
     if (inputValue && inputValue.trim() !== '') {
       const query = inputValue.toLowerCase();
 
-      this.results = this.data.filter((paciente) =>
-        paciente.name.toLowerCase().includes(query) ||
-        String(paciente.age).includes(query) ||
-        paciente.date.toISOString().includes(query)
+      this.results = this.data.filter(
+        (paciente) =>
+          paciente.name.toLowerCase().includes(query) ||
+          String(paciente.age).includes(query) ||
+          paciente.date.toISOString().includes(query)
       );
     } else {
       // Si el valor es nulo, undefined o una cadena vacía, restaura al estado original
@@ -40,8 +51,8 @@ export class Tab1Page {
 
   constructor(private router: Router, private authService: AuthService) {}
 
-  public viewPatient():void{
-    localStorage.setItem('indexValue','sMbc9wYGY1TL1Ihnyt6jgit');
+  public viewPatient(): void {
+    localStorage.setItem('indexValue', 'sMbc9wYGY1TL1Ihnyt6j');
     this.router.navigate(['/patient-view']);
   }
 

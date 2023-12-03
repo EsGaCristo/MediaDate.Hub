@@ -19,28 +19,27 @@
         <ion-card>
           <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/card-media.png" />
           <ion-card-header>
-            <ion-card-title>Card Title</ion-card-title>
-            <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
+            <ion-card-title>{{paciente?.name}} - {{paciente?.age}}</ion-card-title>
+            <ion-card-subtitle>telefono: {{paciente?.cel}}    alergias: {{paciente?.alergias}}</ion-card-subtitle>
           </ion-card-header>
-
           <ion-card-content>
-            Here's a small text description for the card content. Nothing more, nothing less.
+            {{paciente?.description}}
           </ion-card-content>
         </ion-card>
       </ion-col>
     </ion-row>
     <ion-row>
       <ion-col>
-        <ion-list>
+        <ion-list *ngFor="let cita of historialMedicoArray" >
           <ion-item>
             <div class="unread-indicator-wrapper" slot="start">
               <div class="unread-indicator"></div>
             </div>
             <ion-label>
-              <strong></strong><br />
-              <ion-text>+523112893682</ion-text><br />
+              <strong>Padecimiento: {{cita.enfermedad | uppercase}}</strong><br />
+              <ion-text>{{convertirFecha(cita?.fecha) | date:'dd/MM/yyyy HH:mm'}}</ion-text><br />
               <ion-note color="medium" class="ion-text-wrap">
-                es un paciente masculino de 25 años con un historial médico de dolor de espalda crónico. Actualmente, experimenta malestar en la zona lumbar y está siguiendo un tratamiento que incluye medicación para el alivio del dolor. 
+                {{cita.descripcion}}
               </ion-note>
             </ion-label>
             <div class="metadata-end-wrapper" slot="end">

@@ -8,5 +8,5 @@ export interface Paciente {
     description:string;
     date: Date;
     alergias:string;
-    historialMedico:historialMedico[];
+    historialMedico: historialMedico[]; 
 }
