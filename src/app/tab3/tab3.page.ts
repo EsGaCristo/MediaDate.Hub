@@ -34,7 +34,7 @@ export class Tab3Page {
     plugins: [dayGridPlugin],
     locale: esLocale,
     eventClick: this.handleDateClick.bind(this),
-    events: this.CitaService.getCitasEvent()
+    //events: this.CitaService.getCitasEvent()
   };
 
   
@@ -72,6 +72,7 @@ export class Tab3Page {
 
   confirm2() {
     this.cita = {
+      idPaciente: '1',
       title: this.addCitaForm.value.title,
       date: new Date(this.dateValue)
     }
@@ -107,6 +108,7 @@ export class Tab3Page {
     this.events = this.CitaService.getCitasEvent();
     console.log(this.events);
     this.cita = {
+      idPaciente: '1',
       title: '',
       date: new Date()
     }
