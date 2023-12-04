@@ -39,4 +39,9 @@ export class PatientViewPage implements OnInit {
   convertirFecha(timestamp: any): Date {
     return timestamp.toDate();
   }
+
+  public agregarCita(): void {
+    this.router.navigate(['/agregar-cita']);
+  }
+
 }
