@@ -29,29 +29,15 @@
             <ion-text slot="end"> {{formattedString}} </ion-text>
           </ion-item>
 
-          <ion-item>
-            <ion-datetime
-              *ngIf="showPicker"
-              #datetime
-              [value]="dateValue"
-              size="cover"
-              locale="es-ES"
-              (min)="hoy"
-              (ionChange)="dateChanged(datetime.value)"
-              showDefaultButtons="true"
-              (ionCancel)="showPicker=false;"
-              formControlName="fecha"
-            >
-              <span slot="time-label">Tiempo</span>
-            </ion-datetime>
-          </ion-item>
+          <ion-datetime formControlName="fecha" min="{{hoy}}" *ngIf="showPicker" #datetime [value]="dateValue" size="cover"
+            (ionChange)="dateChanged(datetime.value)" showDefaultButtons="true" (ionCancel)="showPicker=false;">
+            <span slot="time-label">Hora</span>
+          </ion-datetime>
         </ion-list>
 
-        <ion-item>
-          <ion-button expand="block" type="submit" [disabled]="!citaForm.valid">
-            Guardar
-          </ion-button>
-        </ion-item>
+        <ion-button expand="block" type="submit" [disabled]="!citaForm.valid">
+          Guardar
+        </ion-button>
       </form>
     </ion-card-content>
   </ion-card>

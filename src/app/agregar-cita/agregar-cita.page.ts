@@ -6,6 +6,7 @@ import { PacienteService } from '../services/paciente.service';
 import { CitaService } from '../services/cita.service';
 import { format, parseISO } from 'date-fns';
 import { ToastController } from '@ionic/angular';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-agregar-cita',
@@ -25,14 +26,15 @@ export class AgregarCitaPage implements OnInit {
     private formBuilder: FormBuilder,
     private pacienteService: PacienteService,
     private toastController: ToastController,
-    private citaService: CitaService
+    private citaService: CitaService,
+    private navCtrl: NavController
   ) {
     this.formattedString = format(
       parseISO(format(new Date(), 'yyyy-MM-dd') + 'T09:00:00.000Z'),
       'HH:mm,MMM d, yyyy'
     );
     this.citaForm = this.formBuilder.group({
-      fecha: ['', Validators.required],
+      fecha: [new Date(), Validators.required],
       descripcion: ['', Validators.required],
     });
   }
@@ -69,13 +71,13 @@ export class AgregarCitaPage implements OnInit {
         .saveCitasColeccion(cita)
         .then(async (result) => {
           if (result === 'success') {
-            console.log('Cita guardado correctamente');
             const toast = await this.toastController.create({
-              message: 'Cita guardado correctamente',
+              message: 'Cita agendada correctamente',
               duration: 2000, // Duración de 1.5 segundos
               position: 'top', // Posición superior
             });
             toast.present();
+            this.Regresar();
           } else {
             console.log('No se guardó la cita');
           }
@@ -91,4 +93,9 @@ export class AgregarCitaPage implements OnInit {
     //Limpiar el formulario
     this.citaForm.reset();
   }
+
+  Regresar() {
+    this.navCtrl.navigateBack('/tabs/tab1');
+  }
+
 }

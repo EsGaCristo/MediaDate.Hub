@@ -4,6 +4,7 @@ import { Observable, map} from 'rxjs';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 import { AlertController } from '@ionic/angular';
+import { C } from '@fullcalendar/core/internal-common';
 
 @Injectable({
   providedIn: 'root'
@@ -49,7 +50,6 @@ export class CitaService {
     // REFERENCIA A COLECCION DE CITAS
     this.citasCollection = this.firestore.collection<Cita>('citas');
     this.citas2 = this.citasCollection.valueChanges({idField:'id'});
-
   }
 
   getCitas(): Cita[] {

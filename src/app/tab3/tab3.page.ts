@@ -1,4 +1,4 @@
-import { Component,ViewChild  } from '@angular/core';
+import { Component,ViewChild } from '@angular/core';
 import { CalendarOptions, EventClickArg } from '@fullcalendar/core'; // useful for typechecking
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
@@ -12,14 +12,15 @@ import { Cita } from '../models/cita.model';
 import { CitaService } from '../services/cita.service';
 import { th } from 'date-fns/locale';
 import {format,parseISO} from 'date-fns';
+import { co } from '@fullcalendar/core/internal-common';
+import { PacienteService } from '../services/paciente.service';
 
 @Component({
   selector: 'app-tab3',
   templateUrl: 'tab3.page.html',
   styleUrls: ['tab3.page.scss']
 })
-export class Tab3Page {
-  
+export class Tab3Page{
 
   modes=['date','date-time','month','time','time-date','year'];
   selectedMode='date';
@@ -29,16 +30,14 @@ export class Tab3Page {
   shouldReloadCalendar: boolean = false;
   public addCitaForm : FormGroup;
   cita: Cita;
-  events: any[] = [
-  
-  ];
+  events: any[] = [];
 
   calendarOptions: CalendarOptions = {
     initialView: 'dayGridMonth',
     plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
     locale: esLocale,
     eventClick: this.handleDateClick.bind(this),
-    events: this.CitaService.getCitasEvent(),
+    //events: this.CitaService.getCitasEvent(),
     headerToolbar: {
       right: 'prev,next today',
       center: 'title',
@@ -47,14 +46,11 @@ export class Tab3Page {
     
   };
 
-  
-  
-
   handleDateClick(arg:any) {
     this.message = arg.event.title;
+    this.buscarPaciente(arg.event.extendedProps.idPaciente);
     this.modal.present();
     //alert('date click! ' + arg.dateStr)
-    
   }
 
   //////////////////////////MODAL//////////////////////////////
@@ -62,6 +58,7 @@ export class Tab3Page {
   @ViewChild('modal2') modal2!: IonModal;
   public name: string= '';// Declaración de la propiedad 'name'
   public message: string= ''; // Declaración de la propiedad 'message'
+  public paciente: string= ''; // Declaración de la propiedad 'paciente'
   cancel() {
     this.modal.dismiss(null, 'cancel');
   }
@@ -89,7 +86,7 @@ export class Tab3Page {
     }
     this.CitaService.addCita( this.cita);
     this.modal2.dismiss(this.name, 'confirm');
-    this.calendarOptions.events = this.CitaService.getCitasEvent();
+    //this.calendarOptions.events = this.CitaService.getCitasEvent();
   }
 
   onWillDismiss2(event: Event) {
@@ -111,24 +108,35 @@ export class Tab3Page {
 
   //////////////////////////ACCIONES//////////////////////////////
 
-  constructor(private formBuilder:FormBuilder, private CitaService: CitaService) {
+  constructor(private formBuilder:FormBuilder, private CitaService: CitaService, private pacienteService: PacienteService) {
     
     this.addCitaForm = this.formBuilder.group({
       title: ['',Validators.required],
       date:['']
     });
-    this.events = this.CitaService.getCitasEvent();
+    //this.events = CitaService.getCitasEvent();
     console.log(this.events);
     this.cita = {
-      idPaciente: '1',
+      idPaciente: '',
       title: '',
       date: new Date()
     }
 
-    this.setToday();
-
-    
+    CitaService.getCitasColeccion().subscribe((citas) => {
+      this.calendarOptions.events = citas;
+      this.events = citas;
+    });
   }
-  
+
+  async buscarPaciente(indexValue: string) {
+    if (indexValue) {
+      await this.pacienteService.getPatientByID(indexValue).subscribe((patient) => {
+        if (patient) {
+          this.paciente = patient.name;
+          console.log(this.paciente);
+        }
+      });
+    }
+  }
 
 }
