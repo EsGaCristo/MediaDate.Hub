@@ -18,6 +18,10 @@ const routes: Routes = [
   {
     path: 'agregar-cita',
     loadChildren: () => import('./agregar-cita/agregar-cita.module').then( m => m.AgregarCitaPageModule)
+  },
+  {
+    path: 'patient-view',
+    loadChildren: () => import('./patient-view/patient-view.module').then( m => m.PatientViewPageModule)
   }
 
 ];
