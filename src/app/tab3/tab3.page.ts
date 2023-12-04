@@ -1,6 +1,9 @@
 import { Component,ViewChild  } from '@angular/core';
 import { CalendarOptions, EventClickArg } from '@fullcalendar/core'; // useful for typechecking
 import dayGridPlugin from '@fullcalendar/daygrid';
+import timeGridPlugin from '@fullcalendar/timegrid';
+import interactionPlugin from '@fullcalendar/daygrid';
+
 import { IonModal } from '@ionic/angular';
 import { OverlayEventDetail } from '@ionic/core/components';
 import esLocale from '@fullcalendar/core/locales/es';
@@ -17,6 +20,7 @@ import {format,parseISO} from 'date-fns';
 })
 export class Tab3Page {
   
+
   modes=['date','date-time','month','time','time-date','year'];
   selectedMode='date';
   showPicker=false;
@@ -31,12 +35,19 @@ export class Tab3Page {
 
   calendarOptions: CalendarOptions = {
     initialView: 'dayGridMonth',
-    plugins: [dayGridPlugin],
+    plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
     locale: esLocale,
     eventClick: this.handleDateClick.bind(this),
-    events: this.CitaService.getCitasEvent()
+    events: this.CitaService.getCitasEvent(),
+    headerToolbar: {
+      right: 'prev,next today',
+      center: 'title',
+      left: 'dayGridMonth,timeGridWeek,timeGridDay'
+    },
+    
   };
 
+  
   
 
   handleDateClick(arg:any) {
@@ -100,6 +111,7 @@ export class Tab3Page {
   //////////////////////////ACCIONES//////////////////////////////
 
   constructor(private formBuilder:FormBuilder, private CitaService: CitaService) {
+    
     this.addCitaForm = this.formBuilder.group({
       title: ['',Validators.required],
       date:['']
