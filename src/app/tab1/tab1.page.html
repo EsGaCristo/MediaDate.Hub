@@ -24,15 +24,15 @@
   <ion-searchbar [debounce]="1000" (ionInput)="handleInput($event)"></ion-searchbar>
 
   <ion-list>
-    <ion-item (click)="viewPatient()" [button]="true" detail="false" *ngFor="let result of results">
+    <ion-item (click)="viewPatient(result.id)" [button]="true" detail="false" *ngFor="let result of results">
       <div class="unread-indicator-wrapper" slot="start">
         <div class="unread-indicator"></div>
       </div>
       <ion-label>
         <strong>{{result.name}}</strong><br />
-        <ion-text>+523112893682</ion-text><br />
+        <ion-text>+52 {{result.cel}}</ion-text><br />
         <ion-note color="medium" class="ion-text-wrap">
-          es un paciente masculino de 25 años con un historial médico de dolor de espalda crónico. Actualmente, experimenta malestar en la zona lumbar y está siguiendo un tratamiento que incluye medicación para el alivio del dolor. 
+          {{result.description}} 
         </ion-note>
       </ion-label>
       <div class="metadata-end-wrapper" slot="end">

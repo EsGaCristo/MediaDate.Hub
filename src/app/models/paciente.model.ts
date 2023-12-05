@@ -9,4 +9,5 @@ export interface Paciente {
     date: Date;
     alergias:string;
     historialMedico: historialMedico[]; 
+    tipoSangre: string;
 }

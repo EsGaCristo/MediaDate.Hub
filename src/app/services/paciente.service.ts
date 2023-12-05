@@ -23,6 +23,7 @@ export class PacienteService {
     // REFERENCIA A COLECCION DE PACIENTES
     this.pacienteCollection = this.firestore.collection<Paciente>('pacientes');
     this.pacientes = this.pacienteCollection.valueChanges({idField:'id'});
+    
   }
 
   getPatients(): Observable<Paciente[]> {

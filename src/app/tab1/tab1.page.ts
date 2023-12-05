@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { IonInput } from '@ionic/angular';
 import { Paciente } from '../models/paciente.model';
+import { PacienteService } from '../services/paciente.service';
 
 @Component({
   selector: 'app-tab1',
@@ -11,22 +12,6 @@ import { Paciente } from '../models/paciente.model';
 })
 export class Tab1Page {
   public data: Paciente[] = [
-    {
-      id: '1',
-      name: 'John Doe',
-      age: 25,
-      cel: 3231123715,
-      description: '',
-      date: new Date('2023-11-06T09:00:00'),
-      alergias: '',
-      historialMedico: [],
-    },
-    /*
-    { id: '2', name: 'Alice Smith', age: 30, suffering: 'Dolor de Cabeza', date: new Date('2023-11-07T10:00:00') },
-    { id: '3', name: 'Carlos Pérez', age: 40, suffering: 'Fiebre', date: new Date('2023-11-08T11:00:00') },
-    { id: '4', name: 'Ana Gómez', age: 35, suffering: 'Problemas Estomacales', date: new Date('2023-11-09T12:00:00') },
-    { id: '5', name: 'Javier López', age: 28, suffering: 'Migraña', date: new Date('2023-11-10T13:00:00') },
-     */
   ];
 
   public results: Paciente[] = [...this.data];
@@ -39,9 +24,7 @@ export class Tab1Page {
 
       this.results = this.data.filter(
         (paciente) =>
-          paciente.name.toLowerCase().includes(query) ||
-          String(paciente.age).includes(query) ||
-          paciente.date.toISOString().includes(query)
+          paciente.name.toLowerCase().includes(query)  
       );
     } else {
       // Si el valor es nulo, undefined o una cadena vacía, restaura al estado original
@@ -49,10 +32,15 @@ export class Tab1Page {
     }
   }
 
-  constructor(private router: Router, private authService: AuthService) {}
+  constructor(private router: Router, private authService: AuthService, private pacienteService: PacienteService) {
+    this.pacienteService.getPatients().subscribe((data) => {
+      this.data = data;
+      this.results = [...this.data];
+    });
+  }
 
-  public viewPatient(): void {
-    localStorage.setItem('indexValue', 'sMbc9wYGY1TL1Ihnyt6j');
+  public viewPatient( idpa : string ): void {
+    localStorage.setItem('indexValue', idpa);
     this.router.navigate(['/patient-view']);
   }
 
