@@ -65,6 +65,7 @@ export class AgregarCitaPage implements OnInit {
   }
 
   async saveCita() {
+    console.log(this.citaForm.value.fecha);
     if (this.citaForm.valid) {
       const cita: Cita = {idPaciente: this.paciente!.id, title: this.citaForm.value.descripcion, date: this.citaForm.value.fecha};
       this.citaService
