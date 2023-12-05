@@ -18,17 +18,20 @@
           <ion-buttons slot="start">
             <ion-button (click)="cancel()">Cancelar</ion-button>
           </ion-buttons>
-          <ion-title>Informacion de la Cita</ion-title>
+          <ion-title style="text-align: center;">Informacion de la Cita</ion-title>
           <ion-buttons slot="end">
             <ion-button (click)="confirm()" [strong]="true">Confirmar</ion-button>
           </ion-buttons>
         </ion-toolbar>
       </ion-header>
       <ion-content class="ion-padding">
-        <ion-label position="stacked">{{ message }}</ion-label>
-
         <ion-item>
-          <ion-input label="Enter your name" labelPlacement="stacked" type="text" placeholder="Your name"></ion-input>
+          <ion-label>Paciente:</ion-label>
+          <ion-label slot="end">{{ paciente }}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>Descripcion:</ion-label>
+          <ion-label slot="end">{{ message }}</ion-label>
         </ion-item>
       </ion-content>
     </ng-template>
