@@ -1,20 +1,16 @@
-<ion-header [translucent]="true" class="custom-header">
+<ion-header [translucent]="true">
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title>Pacientes
-      <ion-icon name="person-outline"></ion-icon>
-    </ion-title>
-    
+    <ion-title>Actualizar {{paciente?.name}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-
   <ion-card>
     <ion-card-content>
-      <form [formGroup]="productForm" (ngSubmit)="savePatient()">
+      <form [formGroup]="productForm" (ngSubmit)="updatePatient()">
         <ion-list lines="full">
           <ion-item>
             <ion-label position="floating" style="font-size: 22px;">Nombre</ion-label>
@@ -40,43 +36,30 @@
             <ion-label position="floating" style="font-size: 22px;">Tipo de Sangre</ion-label>
             <ion-textarea placeholder="Agrega tipo de Sangre" type="text" formControlName="tipoSangre"> </ion-textarea>
           </ion-item>
-
+          
           <ion-item>
             <ion-label position="floating" style="font-size: 22px;">Alergias</ion-label>
-            <ion-input placeholder="Ingresa las alergias del paciente" type="text" formControlName="alergias" outline></ion-input>
+            <ion-input placeholder="Ingresa las alergias del paciente" type="text" formControlName="alergias"></ion-input>
           </ion-item>
 
-          <ion-item (click)="showPicker=!showPicker" style="font-size: 22px;">
-              <ion-label>
-                Fecha de Ingreso
-              </ion-label>
-              <ion-text slot="end">
-                {{formattedString}}
-              </ion-text>
-            </ion-item>
-          
-
-
-          <ion-datetime *ngIf="showPicker" 
-          #datetime
-          [value]="dateValue" size="cover"
-          (ionChange)="dateChanged(datetime.value)"
-          showDefaultButtons="true"
-          (ionCancel)="showPicker=false;"
-          formControlName="fecha"
-          >
-          </ion-datetime>
         </ion-list>
-        <ion-item>    
-          <ion-button expand="block" type="submit" [disabled]="!productForm.valid">
-            <ion-icon name="medkit-outline"></ion-icon>
-              Guardar
+        <ion-row >
+          <ion-col>
+            <ion-button expand="block" type="submit" color="primary" [disabled]="!productForm.valid">
+              <ion-icon name="medkit-outline"></ion-icon>
             </ion-button>
-          </ion-item>
+          </ion-col>
+
+          <ion-col>
+            <ion-button expand="block" (click)="deletePatient(madafaker)" color="danger">
+              <ion-icon name="trash-outline"></ion-icon>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+        
       </form>
     
      
     </ion-card-content>
   </ion-card>
-  
 </ion-content>

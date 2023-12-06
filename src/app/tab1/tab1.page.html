@@ -1,6 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title> Productos </ion-title>
+    <ion-title> Pacientes </ion-title>
 
   </ion-toolbar>
 </ion-header>
@@ -20,4 +20,26 @@
     <ion-row>
     </ion-row>
   </ion-grid>
+
+  <ion-searchbar [debounce]="1000" (ionInput)="handleInput($event)"></ion-searchbar>
+
+  <ion-list>
+    <ion-item (click)="viewPatient(result.id)" [button]="true" detail="false" *ngFor="let result of results">
+      <div class="unread-indicator-wrapper" slot="start">
+        <div class="unread-indicator"></div>
+      </div>
+      <ion-label>
+        <strong>{{result.name}}</strong><br />
+        <ion-text>+52 {{result.cel}}</ion-text><br />
+        <ion-note color="medium" class="ion-text-wrap">
+          {{result.description}} 
+        </ion-note>
+      </ion-label>
+      <div class="metadata-end-wrapper" slot="end">
+        <ion-icon color="medium" name="chevron-forward"></ion-icon>
+      </div>
+    </ion-item>
+  </ion-list>
+
+  
 </ion-content>
