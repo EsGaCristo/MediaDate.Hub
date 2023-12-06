@@ -23,7 +23,8 @@
           <img alt="Silhouette of mountains" src="https://debmedia.com/_ipx/w_1920,q_75/https%3A%2F%2Fblog.debmedia.com%2Fwp-content%2Fuploads%2F2020%2F03%2FAtenci%C3%B3n-al-Cliente-en-Salud.jpg?url=https%3A%2F%2Fblog.debmedia.com%2Fwp-content%2Fuploads%2F2020%2F03%2FAtenci%C3%B3n-al-Cliente-en-Salud.jpg&w=1920&q=75" />
           <ion-card-header>
             <ion-card-title>{{paciente?.name}} - {{paciente?.age}}</ion-card-title>
-            <ion-card-subtitle>telefono: {{paciente?.cel}}    alergias: {{paciente?.alergias}}</ion-card-subtitle>
+            <ion-card-subtitle>telefono: {{paciente?.cel}}  <br>  alergias: {{paciente?.alergias}} <br> Tipo de Sangre: {{paciente?.tipoSangre}} </ion-card-subtitle>
+            
           </ion-card-header>
           <ion-card-content>
             {{paciente?.description}}
