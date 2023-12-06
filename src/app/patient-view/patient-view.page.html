@@ -3,14 +3,26 @@
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title>patientView</ion-title>
+    <ion-title>{{paciente?.name}}</ion-title>
     <ion-buttons slot="end">
-      <ion-button (click)="agregarCita()">Agendar Cita</ion-button>
+      <ion-button (click)="updatePatient()">Actualizar Paciente</ion-button>
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button>
+      <ion-icon name="chevron-up-circle"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="top">
+      <ion-fab-button (click)="agregarCita()">
+        <ion-icon name="add-circle"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+
   <ion-header collapse="condense">
     <ion-toolbar>
       <ion-title size="large">patientView</ion-title>

@@ -44,4 +44,8 @@ export class PatientViewPage implements OnInit {
     this.router.navigate(['/agregar-cita']);
   }
 
+  public updatePatient(): void {
+    this.router.navigate(['/patient-update']);
+  }
+
 }

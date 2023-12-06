@@ -50,6 +50,27 @@ export class PacienteService {
       });
   }
 
+  async updatePatient(paciente: Paciente, id: string): Promise<string>{
+    console.log('el id del producto es: ' + paciente.id);
+    return this.pacienteCollection.doc(id).update(
+              {name: paciente.name,
+              age : paciente.age,
+              cel: paciente.cel,
+              description: paciente.description,
+              tipoSangre: paciente.tipoSangre,
+              alergias: paciente.alergias,
+              }
+    )
+    .then((doc)=>{
+      console.log("Paciente actualizado " + paciente.id);
+      return "success";
+    })
+    .catch((error)=>{
+      console.log("Error al actualizar el paciente" + error);
+      return "error";
+    });
+  }
+
   async removePatient(id: string): Promise<string> {
     console.log('el id del paciente es: ' + id);
     const documentRef = this.firestore.collection('pacientes').doc(id);
