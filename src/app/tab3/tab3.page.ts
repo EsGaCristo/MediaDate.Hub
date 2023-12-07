@@ -229,6 +229,7 @@ export class Tab3Page {
     console.log(this.fechaFormateada);
     console.log(this.descripcion);
     console.log(this.numero);
+    
     const paciente = encodeURIComponent(this.paciente);
     const fechaFormateada = encodeURIComponent(this.fechaFormateada);
     const descripcion = encodeURIComponent(this.descripcion);
