@@ -1,19 +1,21 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule , registerLocaleData} from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
-
+import { ReactiveFormsModule } from '@angular/forms';
 import { PatientViewPageRoutingModule } from './patient-view-routing.module';
 
 import { PatientViewPage } from './patient-view.page';
-
+import localeEs from '@angular/common/locales/es';
+registerLocaleData(localeEs);
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    PatientViewPageRoutingModule
+    PatientViewPageRoutingModule,
+    ReactiveFormsModule
   ],
   declarations: [PatientViewPage]
 })

@@ -8,7 +8,8 @@ import {
 } from '@angular/fire/compat/firestore';
 import { AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 import { AlertController } from '@ionic/angular';
-
+import { historialMedico } from '../models/historial.model';
+import { take } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root',
 })
@@ -107,4 +108,33 @@ export class PacienteService {
     await alert.present();
     return yeet;
   }
+
+
+  async addHistorial(historial: historialMedico, id: string): Promise<string> {
+    this.pacienteCollection.doc(id).get().subscribe((doc)=>{
+      if(doc.exists){
+        let historialArray: historialMedico[] = doc.data()!.historialMedico;
+        historialArray.push(historial);
+        this.pacienteCollection.doc(id).update({historialMedico: historialArray});
+      }
+    });
+    return "success";
+  }
+
+  async updateHistorial(historial: historialMedico, id: string): Promise<string> {
+    this.pacienteCollection.doc(id).get().subscribe((doc)=>{
+      if(doc.exists){
+        let historialArray: historialMedico[] = doc.data()!.historialMedico;
+        for (let i = 0; i < historialArray.length; i++) {
+          if(historialArray[i].idCita == historial.idCita){
+            historialArray[i] = historial;
+          }
+        }
+        this.pacienteCollection.doc(id).update({historialMedico: historialArray});
+      }
+    });
+    return "success";
+  }
+  
+  
 }

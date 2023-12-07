@@ -62,20 +62,23 @@ export class CitaService {
       });
   }
 
-  saveCitasColeccion(cita: Cita): Promise<string> {
+  saveCitasColeccion(cita: Cita): Promise<string[]> {
     return this.citasCollection
       .add(cita)
       .then((doc) => {
         console.log('¡Cita añadida! - ' + doc.id);
         const ref = this.citasCollection.doc(doc.id);
         ref.update({ id: doc.id });
-        return 'success';
+        return ['success', doc.id];
       })
       .catch((error) => {
         console.log('Error al añadir la cita :/ ' + error);
-        return 'error';
+        return ['error', ''];
       });
   }
+
+  
+  
 
   async removeCitasColeccion(id: string): Promise<string> {
     console.log('el id de la cita es: ' + id);
