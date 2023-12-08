@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController, ToastController } from '@ionic/angular';
 import { AuthService } from '../services/auth.service';
@@ -17,6 +17,8 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./user-view.page.scss'],
 })
 export class UserViewPage implements OnInit {
+
+  @ViewChild('enfermedadTextarea') enfermedadTextarea!: IonTextarea;
  
   public textareaHeight: string = 'auto';
   public guajolota = '';
@@ -42,6 +44,10 @@ export class UserViewPage implements OnInit {
   ) {
     
   }
+  public handleDateClick(arg: any) {
+    this.modal2.present();
+    //alert('date click! ' + arg.dateStr)
+  }
 
   ngOnInit() {
     this.loadPatiente();
@@ -62,6 +68,31 @@ export class UserViewPage implements OnInit {
 
   convertirFecha(timestamp: any): Date {
     return timestamp.toDate();
+  }
+
+
+  abrirModal( historia : historialMedico){
+    this.historialMedico = historia;
+    
+    this.modal2.present();
+  }
+
+  @ViewChild('modal2') modal2!: IonModal;
+  onWillDismiss(event: Event) {
+    const ev = event as CustomEvent<OverlayEventDetail<string>>;
+    if (ev.detail.role === 'confirm') {
+      //this.message = `Hello, ${ev.detail.data}!`;
+    }
+  }
+
+
+  
+
+  onWillDismiss2(event: Event) {
+    const ev = event as CustomEvent<OverlayEventDetail<string>>;
+    if (ev.detail.role === 'confirm') {
+      //this.message = `Hello, ${ev.detail.data}!`;
+    }
   }
 
 
