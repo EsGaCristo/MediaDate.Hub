@@ -11,12 +11,15 @@ const routes: Routes = [
   {
     path: 'login',
     loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
-  },  {
+  },
+  {
     path: 'menu',
+    canActivate: [AuthGuard],
     loadChildren: () => import('./menu/menu.module').then( m => m.MenuPageModule)
   },
   {
     path: 'agregar-cita',
+    canActivate: [AuthGuard],
     loadChildren: () => import('./agregar-cita/agregar-cita.module').then( m => m.AgregarCitaPageModule)
   },
   {
@@ -25,8 +28,14 @@ const routes: Routes = [
   },
   {
     path: 'patient-update',
+    canActivate: [AuthGuard],
     loadChildren: () => import('./patient-update/patient-update.module').then( m => m.PatientUpdatePageModule)
+  },
+  {
+    path: 'user-view',
+    loadChildren: () => import('./user-view/user-view.module').then( m => m.UserViewPageModule)
   }
+
 
 ];
 @NgModule({
