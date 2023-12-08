@@ -32,6 +32,7 @@ export class PatientViewPage implements OnInit {
   public addCitaForm: FormGroup;
   public descripcion: string = '';
   public enfermedad: string = '';
+  public yeet = 0;
   constructor(
     private router: Router,
     private alertController: AlertController,
@@ -60,6 +61,7 @@ export class PatientViewPage implements OnInit {
         if (patient) {
           this.paciente = patient;
           this.historialMedicoArray = patient.historialMedico;
+          this.yeet = patient.cel;
         }
       });
     }
@@ -129,5 +131,9 @@ export class PatientViewPage implements OnInit {
     this.textareaHeight = textarea.style.height;
   }
   
+  generarEnlaceWhatsApp() {
+    const enlace = `localhost:8100/user-view?id=${this.paciente?.id}`;
+    window.open(`https://wa.me/52${this.yeet}?text=${encodeURIComponent(enlace)}`, '_blank');
+  }
  
 }
