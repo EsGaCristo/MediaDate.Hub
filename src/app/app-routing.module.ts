@@ -32,6 +32,10 @@ const routes: Routes = [
     loadChildren: () => import('./patient-update/patient-update.module').then( m => m.PatientUpdatePageModule)
   },
   {
+    path: 'prescripcion-medica',
+    loadChildren: () => import('./prescripcion-medica/prescripcion-medica.module').then( m => m.PrescripcionMedicaPageModule)
+  },
+  {
     path: 'user-view',
     loadChildren: () => import('./user-view/user-view.module').then( m => m.UserViewPageModule)
   }

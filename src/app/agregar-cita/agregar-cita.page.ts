@@ -7,6 +7,7 @@ import { CitaService } from '../services/cita.service';
 import { format, parseISO } from 'date-fns';
 import { ToastController } from '@ionic/angular';
 import { NavController } from '@ionic/angular';
+import { historialMedico } from '../models/historial.model';
 
 @Component({
   selector: 'app-agregar-cita',
@@ -66,12 +67,17 @@ export class AgregarCitaPage implements OnInit {
 
   async saveCita() {
     console.log(this.citaForm.value.fecha);
+
     if (this.citaForm.valid) {
       const cita: Cita = {idPaciente: this.paciente!.id, title: this.citaForm.value.descripcion, date: this.citaForm.value.fecha};
+      const historia: historialMedico = {idCita:"",fecha: this.citaForm.value.fecha, descripcion: "Consulta aun no realizada", enfermedad: "A espera de chequeo el dia de la cita"};
+
       this.citaService
         .saveCitasColeccion(cita)
         .then(async (result) => {
-          if (result === 'success') {
+          if (result[0] === 'success') {
+            historia.idCita = result[1];
+            this.pacienteService.addHistorial( historia,this.paciente!.id);
             const toast = await this.toastController.create({
               message: 'Cita agendada correctamente',
               duration: 2000, // Duración de 1.5 segundos

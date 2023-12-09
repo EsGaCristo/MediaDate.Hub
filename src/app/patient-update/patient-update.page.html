@@ -46,13 +46,15 @@
         <ion-row >
           <ion-col>
             <ion-button expand="block" type="submit" color="primary" [disabled]="!productForm.valid">
-              <ion-icon name="medkit-outline"></ion-icon>
+              <ion-icon name="sync-outline" style="margin-right: 5px;"></ion-icon>
+              Actualizar
             </ion-button>
           </ion-col>
 
           <ion-col>
             <ion-button expand="block" (click)="deletePatient(madafaker)" color="danger">
-              <ion-icon name="trash-outline"></ion-icon>
+              <ion-icon name="trash-outline" style="margin-right: 5px;"></ion-icon>
+              Eliminar
             </ion-button>
           </ion-col>
         </ion-row>

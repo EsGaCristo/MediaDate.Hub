@@ -76,6 +76,7 @@ export class Tab3Page {
   public paciente: string = ''; // Declaración de la propiedad 'paciente'
   public fecha: Date = new Date(); // Declaración de la propiedad 'date'
   public fechaFormateada: string = ''; // Declaración de la propiedad 'date'
+  public numero: string = ''; // Declaración de la propiedad 'numero'
   cancel() {
     this.modal.dismiss(null, 'cancel');
   }
@@ -216,8 +217,27 @@ export class Tab3Page {
         .subscribe((patient) => {
           if (patient) {
             this.paciente = patient.name;
+            this.numero = patient.cel.toString();
           }
         });
     }
+  }
+
+
+  abrirEnlace() {
+    console.log(this.paciente);
+    console.log(this.fechaFormateada);
+    console.log(this.descripcion);
+    console.log(this.numero);
+    
+    const paciente = encodeURIComponent(this.paciente);
+    const fechaFormateada = encodeURIComponent(this.fechaFormateada);
+    const descripcion = encodeURIComponent(this.descripcion);
+    const numero = encodeURIComponent(this.numero);
+
+      const mensaje = `Hola ${paciente} 🙌 ...\nEsperando que te encuentres bien, quiero informarte que tienes una cita en nuestra clínica 🏥 para el día y hora ${fechaFormateada}, por razones de ${descripcion}😷, sin más por el momento te esperamos`;
+
+      const enlace = `https://wa.me/52${numero}?text=${mensaje}`;
+    window.open(enlace, '_blank');
   }
 }
