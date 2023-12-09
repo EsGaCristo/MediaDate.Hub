@@ -3,6 +3,8 @@ import { FormBuilder,FormGroup,Validators } from '@angular/forms';
 import {format,parseISO} from 'date-fns';
 import { PacienteService } from '../services/paciente.service';
 import { ToastController } from '@ionic/angular';
+import { th } from 'date-fns/locale';
+import { co } from '@fullcalendar/core/internal-common';
 
 @Component({
   selector: 'app-tab2',
@@ -53,7 +55,11 @@ export class Tab2Page {
     // FUNCIONES
     async savePatient() {
       if (this.productForm.valid) {
-        const paciente = this.productForm.value;
+
+      const paciente = this.productForm.value;
+      
+      paciente.date = new Date(this.productForm.value.fecha);
+          
        this.pacienteService.savePatient(paciente)
        .then(async (result)=>{
         if(result === 'success'){

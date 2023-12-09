@@ -56,7 +56,7 @@
             </div>
             <ion-label>
               <strong>Padecimiento: {{cita.enfermedad | uppercase}}</strong><br />
-              <ion-text>{{cita?.fecha | date:'dd/MM/yyyy HH:mm'}}</ion-text><br />
+              <ion-text>{{convertirFecha(cita?.fecha) | date:'dd/MM/yyyy HH:mm'}}</ion-text><br />
               <ion-note color="medium" class="ion-text-wrap">
                 {{cita.descripcion}}
               </ion-note>

@@ -8,6 +8,7 @@ import { PatientViewPageRoutingModule } from './patient-view-routing.module';
 
 import { PatientViewPage } from './patient-view.page';
 import localeEs from '@angular/common/locales/es';
+import { DatePipe } from '@angular/common';
 registerLocaleData(localeEs);
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ registerLocaleData(localeEs);
     FormsModule,
     IonicModule,
     PatientViewPageRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    DatePipe
   ],
   declarations: [PatientViewPage]
 })

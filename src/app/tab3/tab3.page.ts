@@ -15,6 +15,7 @@ import { co } from '@fullcalendar/core/internal-common';
 import { PacienteService } from '../services/paciente.service';
 import { Location } from '@angular/common';
 
+
 @Component({
   selector: 'app-tab3',
   templateUrl: 'tab3.page.html',
@@ -117,8 +118,9 @@ export class Tab3Page {
 
   confirm2() {
     this.cita.title = this.addCitaForm.value.title;
-    this.cita.date = this.addCitaForm.value.date.toISOString().slice(0, 19).replace('T', ' ');
-    console.log(this.cita.date);
+    console.log(new Date(this.formattedString));
+    this.cita.date = new Date(this.formattedString);
+   
     this.CitaService.updateCitasColeccion(this.cita).then((result) => {
       if (result === 'success') {
         this.modal2.dismiss(this.name, 'confirm');
@@ -141,6 +143,7 @@ export class Tab3Page {
   dateChanged(fecha: any) {
     this.dateValue = fecha;
     this.formattedString = format(parseISO(fecha), 'HH:mm,MMM d, yyyy');
+    console.log(this.formattedString);
     this.showPicker = false;
   }
 
@@ -174,21 +177,22 @@ export class Tab3Page {
           .getPatientByID(cita.idPaciente)
           .subscribe((paciente) => {
             if (paciente) {
+              const fechaFormateada = this.convertirFecha(cita.date);
               this.events.push({
                 title: paciente.name,
-                date: cita.date,
-                fecha: cita.date,
+                date: fechaFormateada,
+                fecha:fechaFormateada,
                 idPaciente: cita.idPaciente,
                 descripcion: cita.title,
                 idCita: cita.id,
               });
             }
             counter++;
-
+            const fechaFormateada = this.convertirFecha(cita.date);
             if (counter === citas.length) {
               const datos = this.events.map((cita) => ({
-                title: cita.title,
-                date: cita.date,
+                title: fechaFormateada,
+                date:fechaFormateada,
                 fecha: cita.fecha,
                 idPaciente: cita.idPaciente,
                 descripcion: cita.descripcion,
@@ -203,7 +207,12 @@ export class Tab3Page {
     });
   }
 
+  convertirFecha(timestamp: any): Date {
+    return timestamp.toDate();
+  }
+
   cargarFormulario(){
+   
     this.addCitaForm = this.formBuilder.group({
       title: [this.descripcion, Validators.required],
       date: [this.fecha, Validators.required],
@@ -240,4 +249,25 @@ export class Tab3Page {
       const enlace = `https://wa.me/52${numero}?text=${mensaje}`;
     window.open(enlace, '_blank');
   }
+
+
+  formatoFecha(fecha: string): string {
+    const fechaObjeto = new Date(fecha);
+    const dia = fechaObjeto.getDate();
+    const mes = fechaObjeto.getMonth() + 1; // Los meses en JavaScript son 0 indexados
+    const anio = fechaObjeto.getFullYear();
+    const horas = fechaObjeto.getHours();
+    const minutos = fechaObjeto.getMinutes();
+
+    // Agregar ceros a la izquierda si es necesario
+    const diaStr = dia < 10 ? `0${dia}` : dia;
+    const mesStr = mes < 10 ? `0${mes}` : mes;
+    const horasStr = horas < 10 ? `0${horas}` : horas;
+    const minutosStr = minutos < 10 ? `0${minutos}` : minutos;
+
+    // Formato final: DD/MM/YYYY, HH:mm
+    return `${diaStr}/${mesStr}/${anio}, ${horasStr}:${minutosStr}`;
+  }
+
+  
 }

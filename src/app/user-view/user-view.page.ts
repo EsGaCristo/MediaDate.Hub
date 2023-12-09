@@ -104,4 +104,5 @@ export class UserViewPage implements OnInit {
     this.textareaHeight = textarea.style.height;
   }
 
+  
 }

@@ -72,6 +72,9 @@ export class AgregarCitaPage implements OnInit {
       const cita: Cita = {idPaciente: this.paciente!.id, title: this.citaForm.value.descripcion, date: this.citaForm.value.fecha};
       const historia: historialMedico = {idCita:"",fecha: this.citaForm.value.fecha, descripcion: "Consulta aun no realizada", enfermedad: "A espera de chequeo el dia de la cita"};
 
+      cita.date = new Date(this.citaForm.value.fecha);
+      historia.fecha = new Date(this.citaForm.value.fecha);
+
       this.citaService
         .saveCitasColeccion(cita)
         .then(async (result) => {
