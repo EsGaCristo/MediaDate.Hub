@@ -78,11 +78,6 @@ export class PatientViewPage implements OnInit {
     this.router.navigate(['/patient-update']);
   }
   
-  generarEnlaceWhatsApp() {
-    const enlace = `http://localhost:8100/user-view?id=${this.paciente?.id}`;
-    // Abre un enlace en una nueva pestaña del navegador
-    window.open(`https://wa.me/?text=${encodeURIComponent(enlace)}`, '_blank');
-  }
 
   @ViewChild('modal2') modal2!: IonModal;
   onWillDismiss(event: Event) {

@@ -1,35 +1,16 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-<<<<<<< HEAD
-    <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
-    </ion-buttons>
-    <ion-title>{{paciente?.name}}</ion-title>
-=======
     
     <ion-title>{{paciente?.name}}</ion-title>
     
->>>>>>> test
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
 
-<<<<<<< HEAD
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button>
-      <ion-icon name="chevron-up-circle"></ion-icon>
-    </ion-fab-button>
-  </ion-fab>
-
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">User-view</ion-title>
-=======
   <ion-header collapse="condense">
     <ion-toolbar>
       <ion-title size="large">patientView</ion-title>
->>>>>>> test
     </ion-toolbar>
   </ion-header>
   <ion-grid fixed>
@@ -51,29 +32,17 @@
     <ion-row>
       <ion-col>
         <ion-list *ngFor="let cita of historialMedicoArray" >
-<<<<<<< HEAD
-          <ion-item>
-=======
           <ion-item (click)="abrirModal(cita)">
->>>>>>> test
             <div class="unread-indicator-wrapper" slot="start">
               <div class="unread-indicator"></div>
             </div>
             <ion-label>
               <strong>Padecimiento: {{cita.enfermedad | uppercase}}</strong><br />
-<<<<<<< HEAD
-              <ion-text>{{convertirFecha(cita?.fecha) | date:'dd/MM/yyyy HH:mm'}}</ion-text><br />
-=======
               <ion-text>{{cita?.fecha | date:'dd/MM/yyyy HH:mm'}}</ion-text><br />
->>>>>>> test
               <ion-note color="medium" class="ion-text-wrap">
                 {{cita.descripcion}}
               </ion-note>
             </ion-label>
-<<<<<<< HEAD
-            
-=======
->>>>>>> test
             <div class="metadata-end-wrapper" slot="end">
               <ion-icon color="medium" name="chevron-forward"></ion-icon>
             </div>
@@ -83,9 +52,5 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-<<<<<<< HEAD
-</ion-content>
-=======
 
 </ion-content>
->>>>>>> test

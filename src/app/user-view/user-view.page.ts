@@ -1,34 +1,23 @@
-<<<<<<< HEAD
-import { Component, OnInit } from '@angular/core';
-=======
 import { Component, OnInit, ViewChild } from '@angular/core';
->>>>>>> test
 import { Router } from '@angular/router';
 import { AlertController, ToastController } from '@ionic/angular';
 import { AuthService } from '../services/auth.service';
 import { PacienteService } from '../services/paciente.service';
 import { historialMedico } from '../models/historial.model';
 import { Paciente } from '../models/paciente.model';
-<<<<<<< HEAD
-=======
 import { IonModal, Platform } from '@ionic/angular';
 import { OverlayEventDetail } from '@ionic/core/components';
 import { FormBuilder, FormGroup, Form, Validators } from '@angular/forms';
 import { IonTextarea } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
->>>>>>> test
 
 @Component({
   selector: 'app-user-view',
   templateUrl: './user-view.page.html',
   styleUrls: ['./user-view.page.scss'],
 })
-export class UserViewPage implements OnInit {
-<<<<<<< HEAD
-  public paciente?: Paciente;
-  public historialMedicoArray:historialMedico[] = [];
 
-=======
+export class UserViewPage implements OnInit {
 
   @ViewChild('enfermedadTextarea') enfermedadTextarea!: IonTextarea;
  
@@ -45,47 +34,11 @@ export class UserViewPage implements OnInit {
   };
   public descripcion: string = '';
   public enfermedad: string = '';
->>>>>>> test
   constructor(
     private router: Router,
     private alertController: AlertController,
     private authService: AuthService,
     private toastController: ToastController,
-<<<<<<< HEAD
-    private pacienteService: PacienteService) { }
-
-    ngOnInit() {
-      this.loadPatiente();
-    }
-    
-    async loadPatiente() {
-      const urlParams = new URLSearchParams(window.location.search);
-      const patientId = urlParams.get('id');
-    
-      if (patientId) {
-        this.pacienteService.getPatientByID(patientId).subscribe((patient) => {
-          if (patient) {
-            this.paciente = patient;
-            this.historialMedicoArray = patient.historialMedico;
-          }
-        });
-      }
-    }
-
-    convertirFecha(timestamp: any): Date {
-      return timestamp.toDate();
-    }
-  
-    public agregarCita(): void {
-      this.router.navigate(['/agregar-cita']);
-    }
-  
-    public updatePatient(): void {
-      this.router.navigate(['/patient-update']);
-    }
-  
-
-=======
     private formBuilder: FormBuilder,
     private pacienteService: PacienteService,
     private route: ActivatedRoute
@@ -134,8 +87,6 @@ export class UserViewPage implements OnInit {
   }
 
 
-  
-
   onWillDismiss2(event: Event) {
     const ev = event as CustomEvent<OverlayEventDetail<string>>;
     if (ev.detail.role === 'confirm') {
@@ -152,5 +103,4 @@ export class UserViewPage implements OnInit {
     this.textareaHeight = textarea.style.height;
   }
 
->>>>>>> test
 }
