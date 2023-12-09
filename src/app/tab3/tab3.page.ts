@@ -15,6 +15,7 @@ import { co } from '@fullcalendar/core/internal-common';
 import { PacienteService } from '../services/paciente.service';
 import { Location } from '@angular/common';
 
+
 @Component({
   selector: 'app-tab3',
   templateUrl: 'tab3.page.html',
@@ -219,7 +220,11 @@ export class Tab3Page {
   ) {
     this.pacienteService
       .updateDateByID(idPaciente, newDate, idCita)
-      .then((result) => {});
+      .then(async (result) => {
+      })
+      .catch((error)=>{
+        console.log(error);
+      });
   }
 
   cargarFormulario() {

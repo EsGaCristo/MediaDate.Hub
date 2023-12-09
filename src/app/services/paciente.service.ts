@@ -10,7 +10,7 @@ import { AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 import { AlertController } from '@ionic/angular';
 import { historialMedico } from '../models/historial.model';
 import { take } from 'rxjs/operators';
-import { error } from 'console';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -61,16 +61,17 @@ export class PacienteService {
     const historialMedico = pacienteDoc.get('historialMedico') || [];
 
     // Encontrar el índice del subdocumento con el idCita
-    const citaIndex = historialMedico.findIndex((cita:any) => cita.idCita === idCita);
-
+    const citaIndex = historialMedico.findIndex(
+      (cita: any) => cita.idCita === idCita
+    );
     // Actualizar la fecha de la cita específica
     historialMedico[citaIndex].fecha = newDate;
 
     return await this.pacienteCollection
       .doc(index)
-      .update({historialMedico})
+      .update({ historialMedico })
       .then((doc) => {
-        console.log(`Cita de paciente ${index} actia;ozadp `);
+        console.log(`Cita de paciente ${index} actualida `);
         return 'success';
       })
       .catch((error) => {
