@@ -118,7 +118,7 @@ export class Tab3Page {
   confirm2() {
     this.cita.title = this.addCitaForm.value.title;
     this.cita.date = this.addCitaForm.value.date.toISOString().slice(0, 19).replace('T', ' ');
-    console.log(this.cita.date);
+    console.log("hola"+this.cita.date);
     this.CitaService.updateCitasColeccion(this.cita).then((result) => {
       if (result === 'success') {
         this.modal2.dismiss(this.name, 'confirm');
@@ -126,6 +126,8 @@ export class Tab3Page {
         this.calendarOptions.events = [];
         this.events = [];
         this.cargarCitas();
+      }else{
+        console.log(result);
       }
     }); 
     //this.modal2.dismiss(this.name, 'confirm');
@@ -138,11 +140,7 @@ export class Tab3Page {
     }
   }
 
-  dateChanged(fecha: any) {
-    this.dateValue = fecha;
-    this.formattedString = format(parseISO(fecha), 'HH:mm,MMM d, yyyy');
-    this.showPicker = false;
-  }
+
 
   //////////////////////////ACCIONES//////////////////////////////
 
@@ -152,6 +150,7 @@ export class Tab3Page {
     private pacienteService: PacienteService,
     private platform: Platform
   ) {
+    this.setToday();
     this.addCitaForm = this.formBuilder.group({
       title: ['', Validators.required],
       date: ['', Validators.required],
@@ -161,8 +160,18 @@ export class Tab3Page {
       title: '',
       date: new Date(),
     };
-
+    
     this.cargarCitas();
+  }
+
+  setToday(){
+    this.formattedString = format(parseISO(format(new Date(),'yyyy-MM-dd')+'T09:00:00.000Z'),'HH:mm,MMM d, yyyy');
+  }
+
+  dateChanged(fecha: any) {
+    this.dateValue = fecha;
+    this.formattedString = format(parseISO(fecha), 'HH:mm,MMM d, yyyy');
+    this.showPicker = false;
   }
 
   cargarCitas() {
@@ -204,6 +213,7 @@ export class Tab3Page {
   }
 
   cargarFormulario(){
+    this.setToday();
     this.addCitaForm = this.formBuilder.group({
       title: [this.descripcion, Validators.required],
       date: [this.fecha, Validators.required],
