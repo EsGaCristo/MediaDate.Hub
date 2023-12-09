@@ -31,6 +31,7 @@ export class UserViewPage implements OnInit {
     enfermedad : "",
     descripcion : ""
   };
+  public addCitaForm: FormGroup;
   public descripcion: string = '';
   public enfermedad: string = '';
   constructor(
@@ -42,7 +43,10 @@ export class UserViewPage implements OnInit {
     private pacienteService: PacienteService,
     private route: ActivatedRoute
   ) {
-    
+    this.addCitaForm = this.formBuilder.group({
+      enfermedad: [this.enfermedad, Validators.required],
+      descripcion: [this.enfermedad, Validators.required],
+    });
   }
   public handleDateClick(arg: any) {
     this.modal2.present();
@@ -73,7 +77,10 @@ export class UserViewPage implements OnInit {
 
   abrirModal( historia : historialMedico){
     this.historialMedico = historia;
-    
+    this.addCitaForm = this.formBuilder.group({
+      enfermedad: [historia.enfermedad, Validators.required],
+      descripcion: [historia.descripcion, Validators.required],
+    });
     this.modal2.present();
   }
 
@@ -84,9 +91,10 @@ export class UserViewPage implements OnInit {
       //this.message = `Hello, ${ev.detail.data}!`;
     }
   }
-
-
   
+  cancel2() {
+    this.modal2.dismiss(null, 'cancel');
+  }
 
   onWillDismiss2(event: Event) {
     const ev = event as CustomEvent<OverlayEventDetail<string>>;
@@ -94,7 +102,23 @@ export class UserViewPage implements OnInit {
       //this.message = `Hello, ${ev.detail.data}!`;
     }
   }
+  confirm2() {
+    this.historialMedico.enfermedad = this.addCitaForm.value.enfermedad;
+    this.historialMedico.descripcion = this.addCitaForm.value.descripcion;
 
+    this.pacienteService.updateHistorial(this.historialMedico, this.paciente!.id).then(async (result)  => {
+      if (result === 'success') {
+        const toast = await this.toastController.create({
+          message: 'Prescripcion Actualizada',
+          duration: 2000, // Duración de 1.5 segundos
+          position: 'top', // Posición superior
+        });
+        toast.present();
+      }
+    });
+
+    this.modal2.dismiss(null, 'cancel');
+  }
 
   adjustTextarea(event: any): void {
     let textarea: any = event.target;
