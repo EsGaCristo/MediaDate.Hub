@@ -109,24 +109,28 @@ export class PatientUpdatePage implements OnInit {
       this.router.navigate(['/tabs/tab1']);
     }
 
-    async deletePatient(id: string){
-      this.pacienteService.removePatient(id).then(async (result)=>{
-        if(result === 'success'){
+    async deletePatient(id: string) {
+      try {
+        const result = await this.pacienteService.removePatient(id);
+    
+        if (result === 'success') {
           console.log("Paciente eliminado correctamente");
+          
           const toast = await this.toastController.create({
             message: 'Paciente eliminado correctamente',
-            duration: 2000, // Duración de 2 segundos
-            position: 'top' // Posición superior
+            duration: 2000,
+            position: 'top'
           });
-          toast.present();
-        }else{
+    
+          await toast.present();
+          await toast.onDidDismiss(); // Esperar a que se cierre el Toast antes de continuar
+          this.router.navigate(['/tabs/tab1']);
+        } else {
           console.log("No sirve");
         }
-       })
-       .catch((error)=>{
-        console.log("Error");
-       });
-
-       this.router.navigate(['/tabs/tab1']);
+      } catch (error) {
+        console.log("Error", error);
+      }
     }
+    
 }
