@@ -122,15 +122,17 @@ export class PatientUpdatePage implements OnInit {
             position: 'top'
           });
     
-          await toast.present();
+          toast.present();
+    
           await toast.onDidDismiss(); // Esperar a que se cierre el Toast antes de continuar
-          this.router.navigate(['/tabs/tab1']);
         } else {
           console.log("No sirve");
         }
       } catch (error) {
         console.log("Error", error);
       }
+    
+      this.router.navigate(['/tabs/tab1']);
     }
     
 }
