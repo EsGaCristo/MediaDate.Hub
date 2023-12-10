@@ -115,26 +115,25 @@ export class PatientUpdatePage implements OnInit {
     
         if (result === 'success') {
           console.log("Paciente eliminado correctamente");
-    
+          
           const toast = await this.toastController.create({
             message: 'Paciente eliminado correctamente',
             duration: 2000,
             position: 'top'
           });
     
-          // Presentar el Toast y esperar a que se cierre
-          await toast.present();
-          await toast.onDidDismiss();
+          toast.present();
     
-          // Navegar a '/tabs/tab1' solo si el usuario acepta
-          this.router.navigate(['/tabs/tab1']);
+          await toast.onDidDismiss(); // Esperar a que se cierre el Toast antes de continuar
         } else {
           console.log("No sirve");
         }
+        this.router.navigate(['/tabs/tab1']);
       } catch (error) {
         console.log("Error", error);
       }
     }
+    
     
 
 
