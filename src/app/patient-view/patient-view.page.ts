@@ -132,7 +132,7 @@ export class PatientViewPage implements OnInit {
   }
   
   generarEnlaceWhatsApp() {
-    const enlace = `localhost:8100/user-view?id=${this.paciente?.id}`;
+    const enlace = `https://mediadatehub.web.app/user-view?id=${this.paciente?.id}`;
     window.open(`https://wa.me/52${this.yeet}?text=${encodeURIComponent(enlace)}`, '_blank');
   }
 
