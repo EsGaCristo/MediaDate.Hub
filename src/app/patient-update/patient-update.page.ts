@@ -114,24 +114,6 @@ export class PatientUpdatePage implements OnInit {
     async deletePatient(id: string) {
       try {
         const result = await this.pacienteService.removePatient(id);
-        const result2 = await this.citaService.eliminarCitaPorIdPaciente(id);
-        console.log(result);
-        console.log(result2);
-        if (result === 'success' && result2 === 'success' ) {
-          console.log("Paciente eliminado correctamente");
-          
-          const toast = await this.toastController.create({
-            message: 'Paciente eliminado correctamente',
-            duration: 2000,
-            position: 'top'
-          });
-    
-          toast.present();
-    
-          await toast.onDidDismiss(); // Esperar a que se cierre el Toast antes de continuar
-        } else {
-          console.log("No sirve");
-        }
         this.router.navigate(['/tabs/tab1']);
       } catch (error) {
         console.log("Error", error);

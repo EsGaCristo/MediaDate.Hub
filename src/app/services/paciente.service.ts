@@ -10,6 +10,10 @@ import { AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 import { AlertController } from '@ionic/angular';
 import { historialMedico } from '../models/historial.model';
 import { take } from 'rxjs/operators';
+import { CitaService } from '../services/cita.service';
+import { ToastController } from '@ionic/angular';
+
+
 @Injectable({
   providedIn: 'root',
 })
@@ -19,7 +23,9 @@ export class PacienteService {
 
   constructor(
     private firestore: AngularFirestore,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private citaService: CitaService,
+    private toastController: ToastController
   ) {
     // REFERENCIA A COLECCION DE PACIENTES
     this.pacienteCollection = this.firestore.collection<Paciente>('pacientes');
@@ -93,7 +99,20 @@ export class PacienteService {
           handler: () => {
             return documentRef
               .delete()
-              .then((doc) => {
+              .then(async (doc) => {
+                const result2 = await this.citaService.eliminarCitaPorIdPaciente(id);
+                if(result2 === 'success'){
+                  console.log("Citas eliminadas correctamente");
+                }
+                const toast = await this.toastController.create({
+                  message: 'Paciente eliminado correctamente',
+                  duration: 2000,
+                  position: 'top'
+                });
+          
+                toast.present();
+          
+                await toast.onDidDismiss(); // Esp
                 console.log('Producto eliminado' + id);
                 yeet = 'success';
               })
