@@ -11,3 +11,7 @@ ion-button {
   margin: 0 auto; /* Centra el botón en el contenedor */
 }
 /* cart.page.scss */
+
+ion-toolbar{
+	background-color: var(--ion-color-mycolor);
+}
