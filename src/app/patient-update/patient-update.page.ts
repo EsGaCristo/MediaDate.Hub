@@ -5,6 +5,7 @@ import { PacienteService } from '../services/paciente.service';
 import { ToastController } from '@ionic/angular';
 import { Paciente } from '../models/paciente.model';
 import { ActivatedRoute, Router } from '@angular/router';
+import { CitaService } from '../services/cita.service';
 
 @Component({
   selector: 'app-patient-update',
@@ -23,6 +24,7 @@ export class PatientUpdatePage implements OnInit {
 
   constructor(private formBuilder:FormBuilder, private pacienteService: PacienteService,
     private toastController: ToastController, private router: Router,
+    private citaService: CitaService,
     private route: ActivatedRoute) {
 
     this.setToday();
@@ -112,22 +114,6 @@ export class PatientUpdatePage implements OnInit {
     async deletePatient(id: string) {
       try {
         const result = await this.pacienteService.removePatient(id);
-    
-        if (result === 'success') {
-          console.log("Paciente eliminado correctamente");
-          
-          const toast = await this.toastController.create({
-            message: 'Paciente eliminado correctamente',
-            duration: 2000,
-            position: 'top'
-          });
-    
-          toast.present();
-    
-          await toast.onDidDismiss(); // Esperar a que se cierre el Toast antes de continuar
-        } else {
-          console.log("No sirve");
-        }
         this.router.navigate(['/tabs/tab1']);
       } catch (error) {
         console.log("Error", error);
