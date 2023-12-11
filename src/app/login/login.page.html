@@ -1,12 +1,13 @@
-<ion-header [translucent]="true">
+<ion-header [translucent]="true" class="ion-no-border">
   <ion-toolbar>
     <ion-title>Iniciar Sesión</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" id="header">
   <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-    <ion-item>
+    <img src="assets/icon/salud.png" alt="">
+    <ion-item class="ion-margin-button">
       <ion-label position="floating">Usuario</ion-label>
       <ion-input formControlName="username" type="text"></ion-input>
     </ion-item>
