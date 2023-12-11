@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, map, of } from 'rxjs';
+import { Observable, firstValueFrom, map, of } from 'rxjs';
 import { Paciente } from '../models/paciente.model';
 import {
   AngularFirestore,
@@ -12,6 +12,7 @@ import { historialMedico } from '../models/historial.model';
 import { take } from 'rxjs/operators';
 import { CitaService } from '../services/cita.service';
 import { ToastController } from '@ionic/angular';
+
 
 
 @Injectable({
@@ -29,8 +30,7 @@ export class PacienteService {
   ) {
     // REFERENCIA A COLECCION DE PACIENTES
     this.pacienteCollection = this.firestore.collection<Paciente>('pacientes');
-    this.pacientes = this.pacienteCollection.valueChanges({idField:'id'});
-    
+    this.pacientes = this.pacienteCollection.valueChanges({ idField: 'id' });
   }
 
   getPatients(): Observable<Paciente[]> {
@@ -56,26 +56,55 @@ export class PacienteService {
         return 'error';
       });
   }
+  async updateDateByID(
+    index: string,
+    newDate: string,
+    idCita?: string
+  ): Promise<string> {
+    const pacienteDoc = await firstValueFrom(
+      await this.pacienteCollection.doc(index).get()
+    );
+    const historialMedico = pacienteDoc.get('historialMedico') || [];
 
-  async updatePatient(paciente: Paciente, id: string): Promise<string>{
-    console.log('el id del producto es: ' + paciente.id);
-    return this.pacienteCollection.doc(id).update(
-              {name: paciente.name,
-              age : paciente.age,
-              cel: paciente.cel,
-              description: paciente.description,
-              tipoSangre: paciente.tipoSangre,
-              alergias: paciente.alergias,
-              }
-    )
-    .then((doc)=>{
-      console.log("Paciente actualizado " + paciente.id);
-      return "success";
-    })
-    .catch((error)=>{
-      console.log("Error al actualizar el paciente" + error);
-      return "error";
-    });
+    // Encontrar el índice del subdocumento con el idCita
+    const citaIndex = historialMedico.findIndex(
+      (cita: any) => cita.idCita === idCita
+    );
+    // Actualizar la fecha de la cita específica
+    historialMedico[citaIndex].fecha = newDate;
+
+    return await this.pacienteCollection
+      .doc(index)
+      .update({ historialMedico })
+      .then((doc) => {
+        console.log(`Cita de paciente ${index} actualida `);
+        return 'success';
+      })
+      .catch((error) => {
+        console.log(`Error al actualizar ${error}`);
+        return 'error';
+      });
+  }
+  async updatePatient(paciente: Paciente, id: string): Promise<string> {
+    //console.log('el id del producto es: ' + paciente.id);
+    return this.pacienteCollection
+      .doc(id)
+      .update({
+        name: paciente.name,
+        age: paciente.age,
+        cel: paciente.cel,
+        description: paciente.description,
+        tipoSangre: paciente.tipoSangre,
+        alergias: paciente.alergias,
+      })
+      .then((doc) => {
+        console.log('Paciente actualizado ' + paciente.id);
+        return 'success';
+      })
+      .catch((error) => {
+        console.log('Error al actualizar el paciente' + error);
+        return 'error';
+      });
   }
 
   async removePatient(id: string): Promise<string> {
@@ -128,32 +157,42 @@ export class PacienteService {
     return yeet;
   }
 
-
   async addHistorial(historial: historialMedico, id: string): Promise<string> {
-    this.pacienteCollection.doc(id).get().subscribe((doc)=>{
-      if(doc.exists){
-        let historialArray: historialMedico[] = doc.data()!.historialMedico;
-        historialArray.push(historial);
-        this.pacienteCollection.doc(id).update({historialMedico: historialArray});
-      }
-    });
-    return "success";
+    this.pacienteCollection
+      .doc(id)
+      .get()
+      .subscribe((doc) => {
+        if (doc.exists) {
+          let historialArray: historialMedico[] = doc.data()!.historialMedico;
+          historialArray.push(historial);
+          this.pacienteCollection
+            .doc(id)
+            .update({ historialMedico: historialArray });
+        }
+      });
+    return 'success';
   }
 
-  async updateHistorial(historial: historialMedico, id: string): Promise<string> {
-    this.pacienteCollection.doc(id).get().subscribe((doc)=>{
-      if(doc.exists){
-        let historialArray: historialMedico[] = doc.data()!.historialMedico;
-        for (let i = 0; i < historialArray.length; i++) {
-          if(historialArray[i].idCita == historial.idCita){
-            historialArray[i] = historial;
+  async updateHistorial(
+    historial: historialMedico,
+    id: string
+  ): Promise<string> {
+    this.pacienteCollection
+      .doc(id)
+      .get()
+      .subscribe((doc) => {
+        if (doc.exists) {
+          let historialArray: historialMedico[] = doc.data()!.historialMedico;
+          for (let i = 0; i < historialArray.length; i++) {
+            if (historialArray[i].idCita == historial.idCita) {
+              historialArray[i] = historial;
+            }
           }
+          this.pacienteCollection
+            .doc(id)
+            .update({ historialMedico: historialArray });
         }
-        this.pacienteCollection.doc(id).update({historialMedico: historialArray});
-      }
-    });
-    return "success";
+      });
+    return 'success';
   }
-  
-  
 }

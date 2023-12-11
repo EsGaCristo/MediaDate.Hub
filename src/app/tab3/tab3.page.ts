@@ -16,6 +16,7 @@ import { PacienteService } from '../services/paciente.service';
 import { Location } from '@angular/common';
 
 
+
 @Component({
   selector: 'app-tab3',
   templateUrl: 'tab3.page.html',
@@ -86,11 +87,11 @@ export class Tab3Page {
     this.modal.dismiss(this.name, 'confirm');
   }
 
-  actualizarFormulario(){
+  actualizarFormulario() {
     console.log(this.dateValue);
     this.cargarFormulario();
     this.modal2.present();
-  }
+  } //Cita agendada despliegue de ventana
 
   async eliminar() {
     console.log(this.cita.id);
@@ -123,13 +124,19 @@ export class Tab3Page {
    
     this.CitaService.updateCitasColeccion(this.cita).then((result) => {
       if (result === 'success') {
+        this.patientAppointmentDateUpdate(
+          this.cita.idPaciente,
+          this.addCitaForm.value.date,
+          this.cita.id
+        );
         this.modal2.dismiss(this.name, 'confirm');
         this.shouldReloadCalendar = true;
         this.calendarOptions.events = [];
         this.events = [];
         this.cargarCitas();
       }
-    }); 
+    });
+
     //this.modal2.dismiss(this.name, 'confirm');
   }
 
@@ -211,13 +218,27 @@ export class Tab3Page {
     return timestamp.toDate();
   }
 
-  cargarFormulario(){
+  patientAppointmentDateUpdate(
+    idPaciente: string,
+    newDate: string,
+    idCita?: string
+  ) {
+    this.pacienteService
+      .updateDateByID(idPaciente, newDate, idCita)
+      .then(async (result) => {
+      })
+      .catch((error)=>{
+        console.log(error);
+      });
+  }
+
+  cargarFormulario() {
    
     this.addCitaForm = this.formBuilder.group({
       title: [this.descripcion, Validators.required],
       date: [this.fecha, Validators.required],
     });
-  }
+  } //Modelo del formulario para actualizar
 
   async buscarPaciente(indexValue: string) {
     if (indexValue) {
@@ -232,21 +253,20 @@ export class Tab3Page {
     }
   }
 
-
   abrirEnlace() {
     console.log(this.paciente);
     console.log(this.fechaFormateada);
     console.log(this.descripcion);
     console.log(this.numero);
-    
+
     const paciente = encodeURIComponent(this.paciente);
     const fechaFormateada = encodeURIComponent(this.fechaFormateada);
     const descripcion = encodeURIComponent(this.descripcion);
     const numero = encodeURIComponent(this.numero);
 
-      const mensaje = `Hola ${paciente} 🙌 ...\nEsperando que te encuentres bien, quiero informarte que tienes una cita en nuestra clínica 🏥 para el día y hora ${fechaFormateada}, por razones de ${descripcion}😷, sin más por el momento te esperamos`;
+    const mensaje = `Hola ${paciente} 🙌 ...\nEsperando que te encuentres bien, quiero informarte que tienes una cita en nuestra clínica 🏥 para el día y hora ${fechaFormateada}, por razones de ${descripcion}😷, sin más por el momento te esperamos`;
 
-      const enlace = `https://wa.me/52${numero}?text=${mensaje}`;
+    const enlace = `https://wa.me/52${numero}?text=${mensaje}`;
     window.open(enlace, '_blank');
   }
 

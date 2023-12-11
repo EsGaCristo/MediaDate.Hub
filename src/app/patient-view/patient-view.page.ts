@@ -1,4 +1,4 @@
-import { Component, OnInit ,ViewChild} from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController, ToastController } from '@ionic/angular';
 import { AuthService } from '../services/auth.service';
@@ -16,18 +16,16 @@ import { IonTextarea } from '@ionic/angular';
   styleUrls: ['./patient-view.page.scss'],
 })
 export class PatientViewPage implements OnInit {
-
   @ViewChild('enfermedadTextarea') enfermedadTextarea!: IonTextarea;
   public textareaHeight: string = 'auto';
-  
 
   public paciente?: Paciente;
-  public historialMedicoArray:historialMedico[] = [];
-  public historialMedico : historialMedico = {
-    idCita : "",
-    fecha : new Date(),
-    enfermedad : "",
-    descripcion : ""
+  public historialMedicoArray: historialMedico[] = [];
+  public historialMedico: historialMedico = {
+    idCita: '',
+    fecha: new Date(),
+    enfermedad: '',
+    descripcion: '',
   };
   public addCitaForm: FormGroup;
   public descripcion: string = '';
@@ -60,7 +58,9 @@ export class PatientViewPage implements OnInit {
       this.pacienteService.getPatientByID(indexValue).subscribe((patient) => {
         if (patient) {
           this.paciente = patient;
-          this.historialMedicoArray = patient.historialMedico;
+          this.historialMedicoArray = patient.historialMedico.sort(
+            (a, b) => new Date(a.fecha).getTime() - new Date(b.fecha).getTime()
+          );
           this.yeet = patient.cel;
         }
       });
@@ -89,7 +89,7 @@ export class PatientViewPage implements OnInit {
   cancel2() {
     this.modal2.dismiss(null, 'cancel');
   }
-  abrirModal( historia : historialMedico){
+  abrirModal(historia: historialMedico) {
     this.historialMedico = historia;
     this.addCitaForm = this.formBuilder.group({
       enfermedad: [historia.enfermedad, Validators.required],
@@ -102,16 +102,18 @@ export class PatientViewPage implements OnInit {
     this.historialMedico.enfermedad = this.addCitaForm.value.enfermedad;
     this.historialMedico.descripcion = this.addCitaForm.value.descripcion;
 
-    this.pacienteService.updateHistorial(this.historialMedico, this.paciente!.id).then(async (result)  => {
-      if (result === 'success') {
-        const toast = await this.toastController.create({
-          message: 'Prescripcion Actualizada',
-          duration: 2000, // Duración de 1.5 segundos
-          position: 'top', // Posición superior
-        });
-        toast.present();
-      }
-    });
+    this.pacienteService
+      .updateHistorial(this.historialMedico, this.paciente!.id)
+      .then(async (result) => {
+        if (result === 'success') {
+          const toast = await this.toastController.create({
+            message: 'Prescripcion Actualizada',
+            duration: 2000, // Duración de 1.5 segundos
+            position: 'top', // Posición superior
+          });
+          toast.present();
+        }
+      });
 
     this.modal2.dismiss(null, 'cancel');
   }
@@ -130,10 +132,13 @@ export class PatientViewPage implements OnInit {
     textarea.style.height = textarea.scrollHeight + 'px';
     this.textareaHeight = textarea.style.height;
   }
-  
+
   generarEnlaceWhatsApp() {
     const enlace = `localhost:8100/user-view?id=${this.paciente?.id}`;
-    window.open(`https://wa.me/52${this.yeet}?text=${encodeURIComponent(enlace)}`, '_blank');
+    window.open(
+      `https://wa.me/52${this.yeet}?text=${encodeURIComponent(enlace)}`,
+      '_blank'
+    );
   }
 
   
