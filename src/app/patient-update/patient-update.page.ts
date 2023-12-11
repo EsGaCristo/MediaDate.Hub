@@ -5,6 +5,7 @@ import { PacienteService } from '../services/paciente.service';
 import { ToastController } from '@ionic/angular';
 import { Paciente } from '../models/paciente.model';
 import { ActivatedRoute, Router } from '@angular/router';
+import { CitaService } from '../services/cita.service';
 
 @Component({
   selector: 'app-patient-update',
@@ -23,6 +24,7 @@ export class PatientUpdatePage implements OnInit {
 
   constructor(private formBuilder:FormBuilder, private pacienteService: PacienteService,
     private toastController: ToastController, private router: Router,
+    private citaService: CitaService,
     private route: ActivatedRoute) {
 
     this.setToday();
@@ -112,8 +114,10 @@ export class PatientUpdatePage implements OnInit {
     async deletePatient(id: string) {
       try {
         const result = await this.pacienteService.removePatient(id);
-    
-        if (result === 'success') {
+        const result2 = await this.citaService.eliminarCitaPorIdPaciente(id);
+        console.log(result);
+        console.log(result2);
+        if (result === 'success' && result2 === 'success' ) {
           console.log("Paciente eliminado correctamente");
           
           const toast = await this.toastController.create({

@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Cita } from '../models/cita.model';
-import { Observable, map} from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFirestoreCollection } from '@angular/fire/compat/firestore';
 import { AlertController } from '@ionic/angular';
 import { C } from '@fullcalendar/core/internal-common';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CitaService {
   private citas: Cita[] = [];
@@ -15,10 +15,13 @@ export class CitaService {
   private citas2: Observable<Cita[]>;
   private citasCollection: AngularFirestoreCollection<Cita>;
 
-  constructor( private firestore: AngularFirestore, private alertController: AlertController) {
+  constructor(
+    private firestore: AngularFirestore,
+    private alertController: AlertController
+  ) {
     // REFERENCIA A COLECCION DE CITAS
     this.citasCollection = this.firestore.collection<Cita>('citas');
-    this.citas2 = this.citasCollection.valueChanges({idField:'id'});
+    this.citas2 = this.citasCollection.valueChanges({ idField: 'id' });
   }
 
   getCitas(): Cita[] {
@@ -26,7 +29,7 @@ export class CitaService {
   }
   getCitasEvent(): any[] {
     // Transforma las citas al formato deseado
-    return this.citas.map(cita => {
+    return this.citas.map((cita) => {
       return { title: cita.title, date: cita.date };
     });
   }
@@ -37,7 +40,6 @@ export class CitaService {
     console.log(this.citas.length);
     console.log(this.citas);
   }
-
 
   getCitasColeccion(): Observable<Cita[]> {
     return this.citas2;
@@ -77,13 +79,33 @@ export class CitaService {
       });
   }
 
-  
-  
+  // Elimina una cita de la coleccion a traves del idPaciente
+  async eliminarCitaPorIdPaciente(idPaciente: string): Promise<String> {
+    try {
+      const citasCollection = this.firestore.collection('citas', (ref) =>
+        ref.where('idPaciente', '==', idPaciente)
+      );
+
+      const citas = await citasCollection.get().toPromise();
+
+      citas!.forEach(async (citaDoc) => {
+        // Eliminar cada cita encontrada
+        await citaDoc.ref.delete();
+      });
+
+      console.log('Citas eliminadas correctamente');
+      return 'success';
+    } catch (error) {
+      console.error('Error al eliminar citas:', error);
+      console.log('Error al eliminar citas');
+      return 'error';
+    }
+  }
 
   async removeCitasColeccion(id: string): Promise<string> {
     console.log('el id de la cita es: ' + id);
     const documentRef = this.firestore.collection('citas').doc(id);
-  
+
     return new Promise<string>(async (resolve, reject) => {
       const alert = await this.alertController.create({
         header: 'Confirmar Eliminación',
@@ -115,10 +137,8 @@ export class CitaService {
           },
         ],
       });
-  
+
       await alert.present();
     });
   }
-  
-
 }
